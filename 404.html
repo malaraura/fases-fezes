@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="/fases-fezes/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Fases e Fezes - Cronoanálise e Gestão da Limpeza de Baias - Agropecuária Vertente">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Fases e Fezes">
+  <link rel="apple-touch-icon" href="icons/app-logo-192.png?v=25">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png?v=25"/>
+
+  <title>Fases e Fezes - Vertente</title>
+  <link rel="manifest" href="manifest.json?v=25">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #183332;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    #flutter_splash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, #244847 0%, #183332 100%);
+      z-index: 999999;
+      color: white;
+      text-align: center;
+      transition: opacity 0.35s ease-out;
+    }
+    .splash-logo {
+      width: 92px;
+      height: 92px;
+      border-radius: 22px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+      animation: pulse 2s infinite ease-in-out;
+    }
+    .splash-title {
+      margin-top: 16px;
+      margin-bottom: 2px;
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #FFFFFF;
+    }
+    .splash-subtitle {
+      margin: 0 0 20px 0;
+      font-size: 13px;
+      color: #94A3B8;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+    .splash-loader-bar {
+      width: 150px;
+      height: 4px;
+      background-color: rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+    .splash-loader-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 45%;
+      background-color: #38BDF8;
+      border-radius: 4px;
+      animation: shimmer 1.2s infinite ease-in-out;
+    }
+    .splash-status {
+      margin-top: 12px;
+      font-size: 11px;
+      color: #CBD5E1;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(250%); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Tela de Abertura / Splash Screen Instantânea -->
+  <div id="flutter_splash">
+    <img src="icons/app-logo-192.png?v=25" alt="Logo" class="splash-logo" />
+    <div class="splash-title">Fases e Fezes</div>
+    <div class="splash-subtitle">Agropecuária Vertente</div>
+    <div class="splash-loader-bar"></div>
+    <div class="splash-status">Iniciando sistema de campo...</div>
+  </div>
+
+  <script>
+    // Remove o splash assim que o primeiro frame do Flutter é desenhado
+    window.addEventListener('flutter-first-frame', function () {
+      const splash = document.getElementById('flutter_splash');
+      if (splash) {
+        splash.style.opacity = '0';
+        setTimeout(function() { splash.remove(); }, 350);
+      }
+    });
+
+    // Fallback: se o evento demorar mais de 6s, remove o splash para segurança
+    setTimeout(function() {
+      const splash = document.getElementById('flutter_splash');
+      if (splash) {
+        splash.style.opacity = '0';
+        setTimeout(function() { splash.remove(); }, 350);
+      }
+    }, 6000);
+
+    // Função global chamada pelo Flutter para forçar atualização total e purgar caches
+    window.forcarAtualizacaoPwa = function() {
+      console.log('[PWA] Forçando atualização total e limpeza de cache...');
+      if ('caches' in window) {
+        caches.keys().then(function(names) {
+          return Promise.all(names.map(function(name) { return caches.delete(name); }));
+        }).then(function() {
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(regs) {
+              return Promise.all(regs.map(function(r) { return r.unregister(); }));
+            }).then(function() {
+              window.location.replace('/?v=2.1&t=' + Date.now());
+            });
+          } else {
+            window.location.replace('/?v=2.1&t=' + Date.now());
+          }
+        });
+      } else {
+        window.location.replace('/?v=2.1&t=' + Date.now());
+      }
+    };
+
+    // Purgar de forma incondicional qualquer cache diferente da versão atual v23
+    if ('caches' in window) {
+      caches.keys().then(function(cacheNames) {
+        cacheNames.forEach(function(c) {
+          if (c !== 'fases-e-fezes-v25') {
+            console.log('[PWA] Purgando cache antigo:', c);
+            caches.delete(c);
+          }
+        });
+      });
+    }
+
+    // Registro do Service Worker com recarregamento automático no controllerchange e message
+    if ('serviceWorker' in navigator) {
+      let refreshing = false;
+      function autoReload() {
+        if (!refreshing) {
+          refreshing = true;
+          console.log('[PWA] Atualização aplicada! Recarregando com a versão mais recente...');
+          window.location.reload();
+        }
+      }
+
+      navigator.serviceWorker.addEventListener('controllerchange', autoReload);
+
+      navigator.serviceWorker.addEventListener('message', function(event) {
+        if (event.data && event.data.type === 'RELOAD_NOW') {
+          autoReload();
+        }
+      });
+
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js?v=25').then(function(reg) {
+          reg.update();
+          console.log('[PWA] Service Worker v23 registrado:', reg.scope);
+
+          if (reg.waiting) {
+            reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+          }
+
+          reg.addEventListener('updatefound', function() {
+            const newWorker = reg.installing;
+            if (newWorker) {
+              newWorker.addEventListener('statechange', function() {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  console.log('[PWA] Nova versão instalada. Forçando ativação...');
+                  newWorker.postMessage({ type: 'SKIP_WAITING' });
+                }
+              });
+            }
+          });
+        }).catch(function(err) {
+          console.warn('[PWA] Falha ao registrar Service Worker:', err);
+        });
+      });
+    }
+  </script>
+  <script src="flutter_bootstrap.js?v=25" async></script>
+</body>
+</html>

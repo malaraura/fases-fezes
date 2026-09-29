@@ -1,0 +1,39 @@
+{
+    "name": "Fases e Fezes - Vertente",
+    "short_name": "Fases e Fezes",
+    "id": "/fases-fezes/?app=v2.1",
+    "start_url": "./?app=v2.1",
+    "scope": "./",
+    "display": "standalone",
+    "background_color": "#183332",
+    "theme_color": "#1F4E79",
+    "description": "Fases e Fezes - Cronoanálise e Gestão da Limpeza de Baias e Confinamento - Agropecuária Vertente",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/app-logo-192.png?v=25",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icons/app-logo-512.png?v=25",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icons/app-logo-maskable-192.png?v=25",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/app-logo-maskable-512.png?v=25",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
