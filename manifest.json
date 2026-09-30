@@ -1,7 +1,7 @@
 {
     "name": "Fases e Fezes - Vertente",
     "short_name": "Fases e Fezes",
-    "id": "/fases-fezes/?app=v2.1",
+    "id": "/?app=v2.1",
     "start_url": "./?app=v2.1",
     "scope": "./",
     "display": "standalone",
