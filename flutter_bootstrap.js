@@ -39,7 +39,7 @@ _flutter.buildConfig = {"engineRevision":"0cd610717bde95fd88343c64f81c11ba4e5c00
 if (window._flutter && window._flutter.buildConfig && window._flutter.buildConfig.builds) {
   window._flutter.buildConfig.builds.forEach(function(b) {
     if (b && b.mainJsPath) {
-      b.mainJsPath = b.mainJsPath + '?v=25';
+      b.mainJsPath = b.mainJsPath + '?v=26';
     }
   });
 }

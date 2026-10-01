@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fases-e-fezes-v25';
+const CACHE_NAME = 'fases-e-fezes-v26';
 
 const SHELL_ASSETS = [
   './',

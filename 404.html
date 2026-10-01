@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <base href="/fases-fezes/">
+  <base id="app-base" href="/">
+  <script>
+    if (window.location.pathname.indexOf('/fases-fezes') === 0) {
+      document.getElementById('app-base').setAttribute('href', '/fases-fezes/');
+    }
+  </script>
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
@@ -12,13 +17,13 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Fases e Fezes">
-  <link rel="apple-touch-icon" href="icons/app-logo-192.png?v=25">
+  <link rel="apple-touch-icon" href="icons/app-logo-192.png?v=26">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png?v=25"/>
+  <link rel="icon" type="image/png" href="favicon.png?v=26"/>
 
   <title>Fases e Fezes - Vertente</title>
-  <link rel="manifest" href="manifest.json?v=25">
+  <link rel="manifest" href="manifest.json?v=26">
 
   <style>
     body {
@@ -153,11 +158,11 @@
       }
     };
 
-    // Purgar de forma incondicional qualquer cache diferente da versão atual v23
+    // Purgar de forma incondicional qualquer cache diferente da versão atual v26
     if ('caches' in window) {
       caches.keys().then(function(cacheNames) {
         cacheNames.forEach(function(c) {
-          if (c !== 'fases-e-fezes-v25') {
+          if (c !== 'fases-e-fezes-v26') {
             console.log('[PWA] Purgando cache antigo:', c);
             caches.delete(c);
           }
@@ -185,9 +190,9 @@
       });
 
       window.addEventListener('load', function () {
-        navigator.serviceWorker.register('sw.js?v=25').then(function(reg) {
+        navigator.serviceWorker.register('sw.js?v=26').then(function(reg) {
           reg.update();
-          console.log('[PWA] Service Worker v23 registrado:', reg.scope);
+          console.log('[PWA] Service Worker v26 registrado:', reg.scope);
 
           if (reg.waiting) {
             reg.waiting.postMessage({ type: 'SKIP_WAITING' });
@@ -210,6 +215,6 @@
       });
     }
   </script>
-  <script src="flutter_bootstrap.js?v=25" async></script>
+  <script src="flutter_bootstrap.js?v=26" async></script>
 </body>
 </html>
